@@ -6,12 +6,12 @@ pygame.init()
 
 # Screen settings
 WIDTH, HEIGHT = 1200, 700
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode(size=(WIDTH, HEIGHT))
 pygame.display.set_caption("Mars Base Investigation")
 
 # Load assets
-player_img = pygame.image.load("astronaut-moving.png")  # Replace with your actual sprite
-background_img = pygame.image.load("mars-windows.png")  # Mars base environment
+player_img = pygame.image.load("images/astronaut-moving.png")  # Replace with your actual sprite
+background_img = pygame.image.load("images/mars-windows.png")  # Mars base environment
 
 # Scale images
 player_img = pygame.transform.scale(player_img, (50, 50))
@@ -33,7 +33,7 @@ flicker_state = True
 
 # Sounds (For atmosphere, replace with actual files)
 pygame.mixer.init()
-ambient_sounds = ["PMSFX_DSGNDist_Glitch_Distortion_RAW_609GC2_2438.mp3", "zapsplat_horror_whispers_ghosts_nightmare_002_12496.mp3", "zapsplat_impacts_metal_tubular_hit_clang_004_111166.mp3"]  # Add creepy background sounds
+ambient_sounds = ["sound/PMSFX_DSGNDist_Glitch_Distortion_RAW_609GC2_2438.mp3", "sound/zapsplat_horror_whispers_ghosts_nightmare_002_12496.mp3", "sound/zapsplat_impacts_metal_tubular_hit_clang_004_111166.mp3"]  # Add creepy background sounds
 
 def play_random_sound():
     sound = pygame.mixer.Sound(random.choice(ambient_sounds))
@@ -41,11 +41,14 @@ def play_random_sound():
 
 # Game loop
 running = True
+clock = pygame.time.Clock()
+screen.fill((0, 0, 0))  # Clear screen
+screen.blit(background_img, (0, 0))
 while running:
-    screen.fill((0, 0, 0))  # Clear screen
+ 
 
     # Draw background
-    screen.blit(background_img, (0, 0))
+  
 
     # Flickering light effect (randomly darkens screen)
     flicker_timer += 1
@@ -53,14 +56,15 @@ while running:
         flicker_timer = 0
         flicker_state = not flicker_state  # Toggle flicker
     
-    if not flicker_state:
-        dark_overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
-        dark_overlay.fill((0, 0, 0, 100))  # Semi-transparent black
-        screen.blit(dark_overlay, (0, 0))
+ #   if not flicker_state:
+   #     dark_overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+     #   dark_overlay.fill((0, 0, 0, 100))  # Semi-transparent black
+#        screen.blit(dark_overlay, (0, 0))
 
     # Player controls
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]: player_x -= player_speed
+    if keys[pygame.K_LEFT]:
+         player_x -= player_speed
     if keys[pygame.K_RIGHT]: player_x += player_speed
     if keys[pygame.K_UP]: player_y -= player_speed
     if keys[pygame.K_DOWN]: player_y += player_speed
@@ -80,14 +84,15 @@ while running:
             log["collected"] = True
 
     # Random ambient sound trigger
-    if random.randint(1, 500) == 1:  
-        play_random_sound()
+   # if random.randint(1, 500) == 1:  
+    #    play_random_sound()
 
     # Event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    pygame.display.update()
-
+  #  pygame.display.update()
+    pygame.display.flip()
+    clock.tick(30)
 pygame.quit()
