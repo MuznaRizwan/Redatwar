@@ -9,7 +9,7 @@ WIDTH, HEIGHT = 1200, 700
 screen = py.display.set_mode((WIDTH, HEIGHT))
 py.display.set_caption("Mars Base Investigation")
 
-# Load assetsmv test2.py credits.py
+# Load assets
 player_img = py.image.load("images/astronaut-moving.png")  # Replace with actual sprite
 background_img = py.image.load("images/mars-windows.png")  # Mars base environment
 
